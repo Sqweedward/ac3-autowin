@@ -1,11 +1,53 @@
-# Ac3AutoWin
+# AC III Auto Win
 
-Одно приложение для обеих версий Assassin's Creed III: **оригинал** (`AC3SP.exe`, 32-бит) и **Remastered** (`ACIII.exe`, 64-бит). Мини-игры: Шашки, Фанорона, Мельница, Боулз. Окно с одним переключателем, внутри два независимых движка (по потоку на игру).
+![preview](preview.png)
 
-- Сборка: `build.cmd` (MSVC) даёт две версии: `Ac3AutoWin_x64.exe` (оригинал и Remastered) и `Ac3AutoWin_x86.exe` (только оригинал, для 32-битной Windows). Работают на Windows Vista SP2 и новее (новые функции системы ищутся во время работы, статических импортов новее Vista нет). В манифесте `requireAdministrator` (Windows спросит подтверждение), чтобы открывать игру, запущенную от администратора.
-- Переключатель неактивен (серый), пока не запущена игра (`ACIII.exe` или `AC3SP.exe`); когда игра появилась, его можно включить; когда закрывается последняя игра, он сам выключается.
-- ВКЛ: каждый движок ждёт свою игру, находит живой матч по vtable объекта игры и патчит проверку победы; победа после ближайшего хода/броска. ВЫКЛ / закрытие окна / конец матча: оригинальные байты возвращаются; копии лежат в `ac3-autowin-hook-backup.txt` (Remastered) и `ac3-autowin-orig-hook-backup.txt` (оригинал) и применяются при следующем запуске, если приложение прервали.
-- Язык: английский по умолчанию, переключатель EN | RU в углу окна. Выбор хранится в реестре `HKCU\Software\Ac3AutoWin\Language` (`en`/`ru`), не в exe.
-- Ключ `--log` пишет события (по-английски) в `ac3-autowin.log` рядом с exe.
-- Работает только с известными сборками (проверка PE timestamp и размера образа). Адреса и поля: `../MEMORY_LAYOUTS.md`.
-- Заменяет `Ac3AutoWinCpp` (Remastered) и `Ac3AutoWinOrig` (оригинал): их исходники остались как история.
+Download: [Releases](../../releases/latest)
+
+
+## English
+
+One switch that wins the minigames of **Assassin's Creed III** (single-player only): **Checkers, Fanorona, Nine Men's Morris and Bowls.**
+Works with the original game (`AC3SP.exe`, build of 2013-07-15) and with Assassin's Creed III Remastered (`ACIII.exe`), any store edition of a supported build.
+
+**How to use**
+1. Run `Ac3AutoWin.exe` (it asks for administrator rights).
+2. Start the game. The switch becomes active once a game is running.
+3. Turn the switch on, start a minigame and make one move (Bowls: one throw): you win.
+4. Close the game: the switch turns itself off. Closing the window removes every patch.
+
+**Requirements**
+- Windows Vista SP2 – 11, 32- or 64-bit (Remastered exists for 64-bit only). Nothing to install.
+- Administrator rights.
+- Only known game builds are supported; on any other build nothing is changed.
+
+**Notes**
+- No game files are modified: the win check is patched in the game's memory only and restored afterwards.
+- Single-player only. Do not use online.
+- Antivirus programs may complain: like any trainer, the program writes to another process's memory, and on 64-bit Windows the exe unpacks its 64-bit part to `%TEMP%\Ac3AutoWin`. Detections are heuristic.
+- VirusTotal: https://www.virustotal.com/gui/file/14b1e5bb577a732743fbc902e068f1d47bf917f485d4464489b2b991b52079a4
+- SHA-256 `Ac3AutoWin.exe`: `14b1e5bb577a732743fbc902e068f1d47bf917f485d4464489b2b991b52079a4`
+- Tested on Windows 11. Reports from older systems are welcome in Issues.
+
+## Русский
+
+Один переключатель, который выигрывает мини-игры **Assassin's Creed III** (только одиночная игра): **Шашки, Фанорона, Мельница и Боулз.**
+Работает с оригиналом (`AC3SP.exe` от 15.07.2013) и с Assassin's Creed III Remastered (`ACIII.exe`), любое издание известной сборки.
+
+**Как пользоваться**
+1. Запустите `Ac3AutoWin.exe` (попросит права администратора).
+2. Запустите игру. Переключатель станет активным, когда игра запущена.
+3. Включите переключатель, начните мини-игру и сделайте один ход (в Боулз один бросок): победа ваша.
+4. Закройте игру: переключатель выключится сам. Закрытие окна снимает все изменения.
+
+**Требования**
+- Windows Vista SP2 – 11, 32 или 64 бит (Remastered только на 64-битной). Ничего устанавливать не нужно.
+- Права администратора.
+- Поддерживаются только известные сборки; на другой сборке программа ничего не меняет.
+
+**Примечания**
+- Файлы игры не изменяются: проверка победы правится только в памяти и возвращается обратно.
+- Только для одиночной игры. Онлайн не используйте.
+- Антивирус может ругаться: как любой трейнер, программа пишет в память другого процесса, а на 64-битной Windows распаковывает 64-битную часть в `%TEMP%\Ac3AutoWin`. Срабатывания эвристические.
+- VirusTotal: ссылка выше. SHA-256 `Ac3AutoWin.exe` указан выше.
+
